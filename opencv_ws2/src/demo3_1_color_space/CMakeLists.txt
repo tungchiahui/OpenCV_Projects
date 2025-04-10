@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(opencv_demo3_1_color_space)
+project(demo3_1_color_space)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -13,17 +13,17 @@ find_package(sensor_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(image_transport REQUIRED)
 
-add_executable(image_split_and_merge_node src/image_split_and_merge_node.cpp)
-add_executable(image_convert_color_space src/image_convert_color_space.cpp)
+add_executable(SplitAndMerge src/SplitAndMerge.cpp)
+add_executable(CvColor src/CvColor.cpp)
 
-target_include_directories(image_split_and_merge_node PUBLIC
+target_include_directories(CvColor PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
-target_compile_features(image_split_and_merge_node PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+target_compile_features(CvColor PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 
 ament_target_dependencies(
-  image_split_and_merge_node
+  CvColor
   "rclcpp"
   "OpenCV"
   "sensor_msgs"
@@ -32,7 +32,7 @@ ament_target_dependencies(
 )
 
 ament_target_dependencies(
-  image_convert_color_space
+  SplitAndMerge
   "rclcpp"
   "OpenCV"
   "sensor_msgs"
@@ -40,9 +40,9 @@ ament_target_dependencies(
   "image_transport"
 )
 
-install(TARGETS image_split_and_merge_node
+install(TARGETS   CvColor
   DESTINATION lib/${PROJECT_NAME})
-install(TARGETS image_convert_color_space
+install(TARGETS SplitAndMerge
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
